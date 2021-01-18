@@ -7,7 +7,7 @@ import SwipeRecognizer from './recognizers/swipe';
 import PanRecognizer from './recognizers/pan';
 import TapRecognizer from './recognizers/tap';
 import PressRecognizer from './recognizers/press';
-import  Manager  from './manager';
+import Manager from './manager';
 
 /**
  * @private
@@ -19,7 +19,10 @@ import  Manager  from './manager';
 export default class Hammer {
   constructor(element, options) {
     options = options || {};
-    options.recognizers = ifUndefined(options.recognizers, Hammer.defaults.preset);
+    options.recognizers = ifUndefined(
+      options.recognizers,
+      Hammer.defaults.preset,
+    );
     return new Manager(element, options);
   }
 }
@@ -86,14 +89,14 @@ Hammer.defaults = {
    * @type {Array}
    */
   preset: [
-      // RecognizerClass, options, [recognizeWith, ...], [requireFailure, ...]
-      [RotateRecognizer, { enable: false }],
-      [PinchRecognizer, { enable: false }, ['rotate']],
-      [SwipeRecognizer, { direction: DIRECTION_HORIZONTAL }],
-      [PanRecognizer, { direction: DIRECTION_HORIZONTAL }, ['swipe']],
-      [TapRecognizer],
-      [TapRecognizer, { event: 'doubletap', taps: 2 }, ['tap']],
-      [PressRecognizer]
+    // RecognizerClass, options, [recognizeWith, ...], [requireFailure, ...]
+    [RotateRecognizer, { enable: false }],
+    [PinchRecognizer, { enable: false }, ['rotate']],
+    [SwipeRecognizer, { direction: DIRECTION_HORIZONTAL }],
+    [PanRecognizer, { direction: DIRECTION_HORIZONTAL }, ['swipe']],
+    [TapRecognizer],
+    [TapRecognizer, { event: 'doubletap', taps: 2 }, ['tap']],
+    [PressRecognizer],
   ],
 
   /**
@@ -152,6 +155,6 @@ Hammer.defaults = {
      * @type {String}
      * @default 'rgba(0,0,0,0)'
      */
-    tapHighlightColor: 'rgba(0,0,0,0)'
-  }
+    tapHighlightColor: 'rgba(0,0,0,0)',
+  },
 };

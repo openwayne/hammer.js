@@ -19,8 +19,11 @@ export default class PinchRecognizer extends AttrRecognizer {
   }
 
   attrTest(input) {
-    return super.attrTest(input) &&
-        (Math.abs(input.scale - 1) > this.options.threshold || this.state & STATE_BEGAN);
+    return (
+      super.attrTest(input) &&
+      (Math.abs(input.scale - 1) > this.options.threshold ||
+        this.state & STATE_BEGAN)
+    );
   }
 
   emit(input) {
@@ -35,5 +38,5 @@ export default class PinchRecognizer extends AttrRecognizer {
 PinchRecognizer.prototype.defaults = {
   event: 'pinch',
   threshold: 0,
-  pointers: 2
+  pointers: 2,
 };

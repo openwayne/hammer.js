@@ -1,15 +1,15 @@
 import {
-    TOUCH_ACTION_COMPUTE,
-    TOUCH_ACTION_MAP,
-    NATIVE_TOUCH_ACTION,
-    PREFIXED_TOUCH_ACTION,
-    TOUCH_ACTION_NONE,
-    TOUCH_ACTION_PAN_X,
-    TOUCH_ACTION_PAN_Y
+  TOUCH_ACTION_COMPUTE,
+  TOUCH_ACTION_MAP,
+  NATIVE_TOUCH_ACTION,
+  PREFIXED_TOUCH_ACTION,
+  TOUCH_ACTION_NONE,
+  TOUCH_ACTION_PAN_X,
+  TOUCH_ACTION_PAN_Y,
 } from './touchaction-Consts';
 import {
-    DIRECTION_VERTICAL,
-    DIRECTION_HORIZONTAL
+  DIRECTION_VERTICAL,
+  DIRECTION_HORIZONTAL,
 } from '../inputjs/input-consts';
 import each from '../utils/each';
 import boolOrFn from '../utils/bool-or-fn';
@@ -41,7 +41,11 @@ export default class TouchAction {
       value = this.compute();
     }
 
-    if (NATIVE_TOUCH_ACTION && this.manager.element.style && TOUCH_ACTION_MAP[value]) {
+    if (
+      NATIVE_TOUCH_ACTION &&
+      this.manager.element.style &&
+      TOUCH_ACTION_MAP[value]
+    ) {
       this.manager.element.style[PREFIXED_TOUCH_ACTION] = value;
     }
     this.actions = value.toLowerCase().trim();
@@ -86,9 +90,14 @@ export default class TouchAction {
     }
 
     let { actions } = this;
-    let hasNone = inStr(actions, TOUCH_ACTION_NONE) && !TOUCH_ACTION_MAP[TOUCH_ACTION_NONE];
-    let hasPanY = inStr(actions, TOUCH_ACTION_PAN_Y) && !TOUCH_ACTION_MAP[TOUCH_ACTION_PAN_Y];
-    let hasPanX = inStr(actions, TOUCH_ACTION_PAN_X) && !TOUCH_ACTION_MAP[TOUCH_ACTION_PAN_X];
+    let hasNone =
+      inStr(actions, TOUCH_ACTION_NONE) && !TOUCH_ACTION_MAP[TOUCH_ACTION_NONE];
+    let hasPanY =
+      inStr(actions, TOUCH_ACTION_PAN_Y) &&
+      !TOUCH_ACTION_MAP[TOUCH_ACTION_PAN_Y];
+    let hasPanX =
+      inStr(actions, TOUCH_ACTION_PAN_X) &&
+      !TOUCH_ACTION_MAP[TOUCH_ACTION_PAN_X];
 
     if (hasNone) {
       // do not prevent defaults if this is a tap gesture
@@ -106,9 +115,11 @@ export default class TouchAction {
       return;
     }
 
-    if (hasNone ||
-        (hasPanY && direction & DIRECTION_HORIZONTAL) ||
-        (hasPanX && direction & DIRECTION_VERTICAL)) {
+    if (
+      hasNone ||
+      (hasPanY && direction & DIRECTION_HORIZONTAL) ||
+      (hasPanX && direction & DIRECTION_VERTICAL)
+    ) {
       return this.preventSrc(srcEvent);
     }
   }

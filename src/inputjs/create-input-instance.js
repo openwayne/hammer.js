@@ -1,4 +1,8 @@
-import { SUPPORT_POINTER_EVENTS,SUPPORT_ONLY_TOUCH,SUPPORT_TOUCH } from './input-consts';
+import {
+  SUPPORT_POINTER_EVENTS,
+  SUPPORT_ONLY_TOUCH,
+  SUPPORT_TOUCH,
+} from './input-consts';
 import inputHandler from './input-handler';
 import PointerEventInput from '../input/pointerevent';
 import TouchInput from '../input/touch';
@@ -15,7 +19,9 @@ import TouchMouseInput from '../input/touchmouse';
 export default function createInputInstance(manager) {
   let Type;
   // let inputClass = manager.options.inputClass;
-  let { options:{ inputClass } } = manager;
+  let {
+    options: { inputClass },
+  } = manager;
   if (inputClass) {
     Type = inputClass;
   } else if (SUPPORT_POINTER_EVENTS) {
@@ -27,5 +33,5 @@ export default function createInputInstance(manager) {
   } else {
     Type = TouchMouseInput;
   }
-  return new (Type)(manager, inputHandler);
+  return new Type(manager, inputHandler);
 }

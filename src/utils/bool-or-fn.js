@@ -1,4 +1,5 @@
 import { TYPE_FUNCTION } from './utils-consts';
+
 /**
  * @private
  * let a boolean value also be a function that must return a boolean

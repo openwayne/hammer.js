@@ -1,9 +1,9 @@
 import {
-    INPUT_START,
-    INPUT_MOVE,
-    INPUT_END,
-    INPUT_CANCEL,
-    INPUT_TYPE_TOUCH
+  INPUT_START,
+  INPUT_MOVE,
+  INPUT_END,
+  INPUT_CANCEL,
+  INPUT_TYPE_TOUCH,
 } from '../inputjs/input-consts';
 import Input from '../inputjs/input-constructor';
 import toArray from '../utils/to-array';
@@ -14,7 +14,7 @@ const TOUCH_INPUT_MAP = {
   touchstart: INPUT_START,
   touchmove: INPUT_MOVE,
   touchend: INPUT_END,
-  touchcancel: INPUT_CANCEL
+  touchcancel: INPUT_CANCEL,
 };
 
 const TOUCH_TARGET_EVENTS = 'touchstart touchmove touchend touchcancel';
@@ -26,10 +26,10 @@ const TOUCH_TARGET_EVENTS = 'touchstart touchmove touchend touchcancel';
  * @extends Input
  */
 export default class TouchInput extends Input {
-
   constructor() {
     TouchInput.prototype.evTarget = TOUCH_TARGET_EVENTS;
     TouchInput.prototype.targetIds = {};
+    TouchInput.prototype.events = TOUCH_TARGET_EVENTS;
     super(...arguments);
 
     this.evTarget = TOUCH_TARGET_EVENTS;
@@ -44,10 +44,10 @@ export default class TouchInput extends Input {
     }
 
     this.callback(this.manager, type, {
-      pointers: touches[0],
-      changedPointers: touches[1],
+      pointers: ev.touches,
+      changedPointers: [ev],
       pointerType: INPUT_TYPE_TOUCH,
-      srcEvent: ev
+      srcEvent: ev,
     });
   }
 }
@@ -108,8 +108,8 @@ function getTouches(ev, type) {
   }
 
   return [
-      // merge targetTouches with changedTargetTouches so it contains ALL touches, including 'end' and 'cancel'
-      uniqueArray(targetTouches.concat(changedTargetTouches), 'identifier', true),
-      changedTargetTouches
+    // merge targetTouches with changedTargetTouches so it contains ALL touches, including 'end' and 'cancel'
+    uniqueArray(targetTouches.concat(changedTargetTouches), 'identifier', true),
+    changedTargetTouches,
   ];
 }
