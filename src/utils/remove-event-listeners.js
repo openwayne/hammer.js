@@ -12,3 +12,9 @@ export default function removeEventListeners(target, types, handler) {
     target.removeEventListener(type, handler, false);
   });
 }
+
+export function removeManagerListeners(manager, types, handler) {
+  each(splitStr(types), (type) => {
+    manager.off(`origin_input:${type}`, handler);
+  });
+}

@@ -1,13 +1,13 @@
 import Input from '../inputjs/input-constructor';
 import bindFn from '../utils/bind-fn';
-import  TouchInput  from './touch';
-import  MouseInput  from './mouse';
+import TouchInput from './touch';
+import MouseInput from './mouse';
 import {
-    INPUT_START,
-    INPUT_END,
-    INPUT_CANCEL,
-    INPUT_TYPE_TOUCH,
-    INPUT_TYPE_MOUSE
+  INPUT_START,
+  INPUT_END,
+  INPUT_CANCEL,
+  INPUT_TYPE_TOUCH,
+  INPUT_TYPE_MOUSE,
 } from '../inputjs/input-consts';
 
 /**
@@ -36,6 +36,14 @@ export default class TouchMouseInput extends Input {
     this.lastTouches = [];
   }
 
+  init() {
+    console.log('touch mouse init');
+  }
+
+  destroy() {
+    console.log('touch mouse destroy');
+  }
+
   /**
    * @private
    * handle mouse and touch events
@@ -44,10 +52,14 @@ export default class TouchMouseInput extends Input {
    * @param {Object} inputData
    */
   handler(manager, inputEvent, inputData) {
-    let isTouch = (inputData.pointerType === INPUT_TYPE_TOUCH);
-    let isMouse = (inputData.pointerType === INPUT_TYPE_MOUSE);
+    let isTouch = inputData.pointerType === INPUT_TYPE_TOUCH;
+    let isMouse = inputData.pointerType === INPUT_TYPE_MOUSE;
 
-    if (isMouse && inputData.sourceCapabilities && inputData.sourceCapabilities.firesTouchEvents) {
+    if (
+      isMouse &&
+      inputData.sourceCapabilities &&
+      inputData.sourceCapabilities.firesTouchEvents
+    ) {
       return;
     }
 
@@ -81,12 +93,14 @@ function recordTouches(eventType, eventData) {
 }
 
 function setLastTouch(eventData) {
-  let { changedPointers:[touch] } = eventData;
+  let {
+    changedPointers: [touch],
+  } = eventData;
   if (touch.identifier === this.primaryTouch) {
     let lastTouch = { x: touch.clientX, y: touch.clientY };
     this.lastTouches.push(lastTouch);
     let lts = this.lastTouches;
-    let removeLastTouch = function() {
+    let removeLastTouch = function () {
       let i = lts.indexOf(lastTouch);
       if (i > -1) {
         lts.splice(i, 1);

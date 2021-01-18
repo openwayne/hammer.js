@@ -1,15 +1,15 @@
 import {
-    INPUT_START,
-    INPUT_MOVE,
-    INPUT_END,
-    INPUT_TYPE_MOUSE
+  INPUT_START,
+  INPUT_MOVE,
+  INPUT_END,
+  INPUT_TYPE_MOUSE,
 } from '../inputjs/input-consts';
 import Input from '../inputjs/input-constructor';
 
 const MOUSE_INPUT_MAP = {
   mousedown: INPUT_START,
   mousemove: INPUT_MOVE,
-  mouseup: INPUT_END
+  mouseup: INPUT_END,
 };
 
 const MOUSE_ELEMENT_EVENTS = 'mousedown';
@@ -23,6 +23,7 @@ const MOUSE_WINDOW_EVENTS = 'mousemove mouseup';
  */
 export default class MouseInput extends Input {
   constructor() {
+    MouseInput.prototype.events = `${MOUSE_ELEMENT_EVENTS} ${MOUSE_WINDOW_EVENTS}`;
     super(...arguments);
 
     this.evEl = MOUSE_ELEMENT_EVENTS;
@@ -61,7 +62,7 @@ export default class MouseInput extends Input {
       pointers: [ev],
       changedPointers: [ev],
       pointerType: INPUT_TYPE_MOUSE,
-      srcEvent: ev
+      srcEvent: ev,
     });
   }
 }

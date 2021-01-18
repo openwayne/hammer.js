@@ -12,3 +12,9 @@ export default function addEventListeners(target, types, handler) {
     target.addEventListener(type, handler, false);
   });
 }
+
+export function addManagerListeners(manager, types, handler) {
+  each(splitStr(types), (type) => {
+    manager.on(`origin_input:${type}`, handler);
+  });
+}
