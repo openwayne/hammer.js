@@ -2,7 +2,7 @@
   "name": "g6-hammerjs",
   "title": "Hammer.JS for G6",
   "description": "A javascript library for multi-touch gestures",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "http://hammerjs.github.io/",
   "main": "src/index.js",
   "license": "MIT",
@@ -30,7 +30,6 @@
   },
   "dependencies": {},
   "devDependencies": {},
-  "main": "hammer.js",
   "engines": {
     "node": ">=0.8.0"
   },
