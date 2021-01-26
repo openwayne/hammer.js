@@ -1,4 +1,4 @@
-import { INPUT_CANCEL,COMPUTE_INTERVAL } from './input-consts';
+import { INPUT_CANCEL, COMPUTE_INTERVAL } from './input-consts';
 import { abs } from '../utils/utils-consts';
 import getVelocity from './get-velocity';
 import getDirection from './get-direction';
@@ -17,14 +17,17 @@ export default function computeIntervalInputData(session, input) {
   let velocityY;
   let direction;
 
-  if (input.eventType !== INPUT_CANCEL && (deltaTime > COMPUTE_INTERVAL || last.velocity === undefined)) {
+  if (
+    input.eventType !== INPUT_CANCEL &&
+    (deltaTime > COMPUTE_INTERVAL || last.velocity === undefined)
+  ) {
     let deltaX = input.deltaX - last.deltaX;
     let deltaY = input.deltaY - last.deltaY;
 
     let v = getVelocity(deltaTime, deltaX, deltaY);
     velocityX = v.x;
     velocityY = v.y;
-    velocity = (abs(v.x) > abs(v.y)) ? v.x : v.y;
+    velocity = abs(v.x) > abs(v.y) ? v.x : v.y;
     direction = getDirection(deltaX, deltaY);
 
     session.lastInterval = input;

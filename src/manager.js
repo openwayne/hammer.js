@@ -331,16 +331,3 @@ export default class Manager {
     this.element = null;
   }
 }
-
-/**
- * @private
- * trigger dom event
- * @param {String} event
- * @param {Object} data
- */
-function triggerDomEvent(event, data) {
-  let gestureEvent = document.createEvent('Event');
-  gestureEvent.initEvent(event, true, true);
-  gestureEvent.gesture = data;
-  data.target.dispatchEvent(gestureEvent);
-}

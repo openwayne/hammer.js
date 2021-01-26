@@ -2,64 +2,63 @@
 /* globals QUnit,Hammer,utils*/
 /*jshint -W079 */
 
-var parent,
-    child,
-    hammerChild,
-    hammerParent;
+var parent, child, hammerChild, hammerParent;
 
 QUnit.module('Nested gesture recognizers (Tap Child + Pan Parent)', {
-    beforeEach: function() {
-        parent = document.createElement('div');
-        child = document.createElement('div');
+  beforeEach: function () {
+    parent = document.createElement('div');
+    child = document.createElement('div');
 
-        document.getElementById('qunit-fixture').appendChild(parent);
-        parent.appendChild(child);
+    document.getElementById('qunit-fixture').appendChild(parent);
+    parent.appendChild(child);
 
-        hammerParent = new Hammer.Manager(parent, {
-            touchAction: 'none'
-          });
-        hammerChild = new Hammer.Manager(child, {
-            touchAction: 'none'
-          });
+    hammerParent = new Hammer.Manager(parent, {
+      touchAction: 'none',
+    });
+    hammerChild = new Hammer.Manager(child, {
+      touchAction: 'none',
+    });
 
-        hammerChild.add(new Hammer.Tap());
-        hammerParent.add(new Hammer.Pan({ threshold: 5, pointers: 1 }));
-      },
-    afterEach: function() {
-        hammerChild.destroy();
-        hammerParent.destroy();
-      }
+    hammerChild.add(new Hammer.Tap());
+    hammerParent.add(new Hammer.Pan({ threshold: 5, pointers: 1 }));
+  },
+  afterEach: function () {
+    hammerChild.destroy();
+    hammerParent.destroy();
+  },
+});
+
+QUnit.test('Tap on the child', function (assert) {
+  assert.expect(1);
+
+  hammerChild.on('tap', function () {
+    assert.ok(true);
+  });
+  hammerParent.on('tap', function () {
+    throw new Error('tap should not fire on parent');
   });
 
-QUnit.test('Tap on the child', function(assert) {
+  utils.dispatchTouchEvent(child, 'start', 0, 10);
+  utils.dispatchTouchEvent(child, 'end', 0, 10);
+});
+
+QUnit.test(
+  'Panning on the child should fire parent pan and should not fire child tap event',
+  function (assert) {
     assert.expect(1);
 
-    hammerChild.on('tap', function() {
-        assert.ok(true);
-      });
-    hammerParent.on('tap', function() {
-        throw new Error('tap should not fire on parent');
-      });
-
-    utils.dispatchTouchEvent(child, 'start', 0, 10);
-    utils.dispatchTouchEvent(child, 'end', 0, 10);
-  });
-
-QUnit.test('Panning on the child should fire parent pan and should not fire child tap event', function(assert) {
-    assert.expect(1);
-
-    hammerChild.on('tap', function() {
-        throw new Error('tap should not fire on parent');
-      });
-    hammerParent.on('panend', function() {
-        assert.ok(true);
-      });
+    hammerChild.on('tap', function () {
+      throw new Error('tap should not fire on parent');
+    });
+    hammerParent.on('panend', function () {
+      assert.ok(true);
+    });
 
     utils.dispatchTouchEvent(child, 'start', 10, 0);
     utils.dispatchTouchEvent(child, 'move', 20, 0);
     utils.dispatchTouchEvent(child, 'end', 30, 0);
-
-  });
+  },
+);
 
 /*
  // test (optional pointers validation)
@@ -105,66 +104,69 @@ QUnit.test('Panning on the child should fire parent pan and should not fire chil
 
 var pressPeriod = 600;
 QUnit.module('Nested gesture recognizers (Press Child + Pan Parent)', {
-    beforeEach: function() {
-        parent = document.createElement('div');
-        child = document.createElement('div');
+  beforeEach: function () {
+    parent = document.createElement('div');
+    child = document.createElement('div');
 
-        document.getElementById('qunit-fixture').appendChild(parent);
-        parent.appendChild(child);
+    document.getElementById('qunit-fixture').appendChild(parent);
+    parent.appendChild(child);
 
-        hammerParent = new Hammer.Manager(parent, {
-            touchAction: 'none'
-          });
-        hammerChild = new Hammer.Manager(child, {
-            touchAction: 'none'
-          });
+    hammerParent = new Hammer.Manager(parent, {
+      touchAction: 'none',
+    });
+    hammerChild = new Hammer.Manager(child, {
+      touchAction: 'none',
+    });
 
-        hammerChild.add(new Hammer.Press({ time: pressPeriod }));
-        hammerParent.add(new Hammer.Pan({ threshold: 5, pointers: 1 }));
-      },
-    afterEach: function() {
-        hammerChild.destroy();
-        hammerParent.destroy();
-      }
+    hammerChild.add(new Hammer.Press({ time: pressPeriod }));
+    hammerParent.add(new Hammer.Pan({ threshold: 5, pointers: 1 }));
+  },
+  afterEach: function () {
+    hammerChild.destroy();
+    hammerParent.destroy();
+  },
+});
+
+QUnit.test('Press on the child', function (assert) {
+  assert.expect(1);
+
+  hammerChild.on('press', function () {
+    assert.ok(true);
+  });
+  hammerParent.on('press', function () {
+    throw new Error('press should not fire on parent');
   });
 
-QUnit.test('Press on the child', function(assert) {
-    assert.expect(1);
+  utils.dispatchTouchEvent(child, 'start', 0, 10);
 
-    hammerChild.on('press', function() {
-        assert.ok(true);
-      });
-    hammerParent.on('press', function() {
-        throw new Error('press should not fire on parent');
-      });
+  var done = assert.async();
 
-    utils.dispatchTouchEvent(child, 'start', 0, 10);
+  setTimeout(function () {
+    done();
+  }, pressPeriod);
+});
 
-    var done = assert.async();
-
-    setTimeout(function() {
-        done();
-      }, pressPeriod);
-  });
-
-QUnit.test('When Press is followed by Pan on the same element, both gestures are recognized', function(assert) {
+QUnit.test(
+  'When Press is followed by Pan on the same element, both gestures are recognized',
+  function (assert) {
     assert.expect(2);
-    hammerChild.on('press', function() {
-        assert.ok(true);
-      });
-    hammerParent.on('panend', function() {
-        assert.ok(true);
-      });
+    hammerChild.on('press', function () {
+      assert.ok(true);
+    });
+    hammerParent.on('panend', function () {
+      assert.ok(true);
+    });
 
     utils.dispatchTouchEvent(child, 'start', 0, 10);
     var done = assert.async();
 
-    setTimeout(function() {
-        utils.dispatchTouchEvent(child, 'move', 10, 10);
-        utils.dispatchTouchEvent(child, 'move', 20, 10);
-        utils.dispatchTouchEvent(child, 'move', 30, 10);
-        utils.dispatchTouchEvent(child, 'end', 30, 10);
+    setTimeout(function () {
+      utils.dispatchTouchEvent(child, 'move', 10, 10);
+      utils.dispatchTouchEvent(child, 'move', 20, 10);
+      utils.dispatchTouchEvent(child, 'move', 30, 10);
+      utils.dispatchTouchEvent(child, 'end', 30, 10);
 
-        done();
-      }, pressPeriod);
-  });
+      done();
+    }, pressPeriod);
+  },
+);

@@ -1,5 +1,11 @@
 import { abs } from '../utils/utils-consts';
-import { DIRECTION_NONE,DIRECTION_LEFT,DIRECTION_RIGHT,DIRECTION_UP,DIRECTION_DOWN } from './input-consts';
+import {
+  DIRECTION_NONE,
+  DIRECTION_LEFT,
+  DIRECTION_RIGHT,
+  DIRECTION_UP,
+  DIRECTION_DOWN,
+} from './input-consts';
 
 /**
  * @private

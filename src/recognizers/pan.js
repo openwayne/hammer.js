@@ -1,16 +1,19 @@
-import  AttrRecognizer from './attribute';
+import AttrRecognizer from './attribute';
 import {
-    DIRECTION_ALL,
-    DIRECTION_HORIZONTAL,
-    DIRECTION_VERTICAL,
-    DIRECTION_NONE,
-    DIRECTION_UP,
-    DIRECTION_DOWN,
-    DIRECTION_LEFT,
-    DIRECTION_RIGHT
+  DIRECTION_ALL,
+  DIRECTION_HORIZONTAL,
+  DIRECTION_VERTICAL,
+  DIRECTION_NONE,
+  DIRECTION_UP,
+  DIRECTION_DOWN,
+  DIRECTION_LEFT,
+  DIRECTION_RIGHT,
 } from '../inputjs/input-consts';
 import { STATE_BEGAN } from '../recognizerjs/recognizer-consts';
-import { TOUCH_ACTION_PAN_X,TOUCH_ACTION_PAN_Y } from '../touchactionjs/touchaction-Consts';
+import {
+  TOUCH_ACTION_PAN_X,
+  TOUCH_ACTION_PAN_Y,
+} from '../touchactionjs/touchaction-Consts';
 import directionStr from '../recognizerjs/direction-str';
 
 /**
@@ -28,7 +31,9 @@ export default class PanRecognizer extends AttrRecognizer {
   }
 
   getTouchAction() {
-    let { options:{ direction } } = this;
+    let {
+      options: { direction },
+    } = this;
     let actions = [];
     if (direction & DIRECTION_HORIZONTAL) {
       actions.push(TOUCH_ACTION_PAN_Y);
@@ -50,26 +55,32 @@ export default class PanRecognizer extends AttrRecognizer {
     // lock to axis?
     if (!(direction & options.direction)) {
       if (options.direction & DIRECTION_HORIZONTAL) {
-        direction = (x === 0) ? DIRECTION_NONE : (x < 0) ? DIRECTION_LEFT : DIRECTION_RIGHT;
+        direction =
+          x === 0 ? DIRECTION_NONE : x < 0 ? DIRECTION_LEFT : DIRECTION_RIGHT;
         hasMoved = x !== this.pX;
         distance = Math.abs(input.deltaX);
       } else {
-        direction = (y === 0) ? DIRECTION_NONE : (y < 0) ? DIRECTION_UP : DIRECTION_DOWN;
+        direction =
+          y === 0 ? DIRECTION_NONE : y < 0 ? DIRECTION_UP : DIRECTION_DOWN;
         hasMoved = y !== this.pY;
         distance = Math.abs(input.deltaY);
       }
     }
     input.direction = direction;
-    return hasMoved && distance > options.threshold && direction & options.direction;
+    return (
+      hasMoved && distance > options.threshold && direction & options.direction
+    );
   }
 
   attrTest(input) {
-    return AttrRecognizer.prototype.attrTest.call(this, input) && // replace with a super call
-        (this.state & STATE_BEGAN || (!(this.state & STATE_BEGAN) && this.directionTest(input)));
+    return (
+      AttrRecognizer.prototype.attrTest.call(this, input) && // replace with a super call
+      (this.state & STATE_BEGAN ||
+        (!(this.state & STATE_BEGAN) && this.directionTest(input)))
+    );
   }
 
   emit(input) {
-
     this.pX = input.deltaX;
     this.pY = input.deltaY;
 
@@ -86,5 +97,5 @@ PanRecognizer.prototype.defaults = {
   event: 'pan',
   threshold: 10,
   pointers: 1,
-  direction: DIRECTION_ALL
+  direction: DIRECTION_ALL,
 };

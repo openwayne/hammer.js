@@ -1,6 +1,9 @@
 import AttrRecognizer from '../recognizers/attribute';
 import { abs } from '../utils/utils-consts';
-import { DIRECTION_HORIZONTAL,DIRECTION_VERTICAL } from '../inputjs/input-consts';
+import {
+  DIRECTION_HORIZONTAL,
+  DIRECTION_VERTICAL,
+} from '../inputjs/input-consts';
 import PanRecognizer from './pan';
 import { INPUT_END } from '../inputjs/input-consts';
 import directionStr from '../recognizerjs/direction-str';
@@ -33,11 +36,14 @@ export default class SwipeRecognizer extends AttrRecognizer {
       velocity = input.overallVelocityY;
     }
 
-    return super.attrTest(input) &&
-        direction & input.offsetDirection &&
-        input.distance > this.options.threshold &&
-        input.maxPointers === this.options.pointers &&
-        abs(velocity) > this.options.velocity && input.eventType & INPUT_END;
+    return (
+      super.attrTest(input) &&
+      direction & input.offsetDirection &&
+      input.distance > this.options.threshold &&
+      input.maxPointers === this.options.pointers &&
+      abs(velocity) > this.options.velocity &&
+      input.eventType & INPUT_END
+    );
   }
 
   emit(input) {
@@ -55,5 +61,5 @@ SwipeRecognizer.prototype.defaults = {
   threshold: 10,
   velocity: 0.3,
   direction: DIRECTION_HORIZONTAL | DIRECTION_VERTICAL,
-  pointers: 1
+  pointers: 1,
 };

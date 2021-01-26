@@ -13,7 +13,7 @@ import getRotation from './get-rotation';
 import computeIntervalInputData from './compute-interval-input-data';
 
 /**
-* @private
+ * @private
  * extend the data with some usable properties like scale, rotate, velocity etc
  * @param {Object} manager
  * @param {Object} input
@@ -21,7 +21,7 @@ import computeIntervalInputData from './compute-interval-input-data';
 export default function computeInputData(manager, input) {
   let { session } = manager;
   let { pointers } = input;
-  let { length:pointersLength } = pointers;
+  let { length: pointersLength } = pointers;
 
   // store the first input to calculate the distance and direction
   if (!session.firstInput) {
@@ -38,7 +38,7 @@ export default function computeInputData(manager, input) {
   let { firstInput, firstMultiple } = session;
   let offsetCenter = firstMultiple ? firstMultiple.center : firstInput.center;
 
-  let center = input.center = getCenter(pointers);
+  let center = (input.center = getCenter(pointers));
   input.timeStamp = now();
   input.deltaTime = input.timeStamp - firstInput.timeStamp;
 
@@ -48,16 +48,28 @@ export default function computeInputData(manager, input) {
   computeDeltaXY(session, input);
   input.offsetDirection = getDirection(input.deltaX, input.deltaY);
 
-  let overallVelocity = getVelocity(input.deltaTime, input.deltaX, input.deltaY);
+  let overallVelocity = getVelocity(
+    input.deltaTime,
+    input.deltaX,
+    input.deltaY,
+  );
   input.overallVelocityX = overallVelocity.x;
   input.overallVelocityY = overallVelocity.y;
-  input.overallVelocity = (abs(overallVelocity.x) > abs(overallVelocity.y)) ? overallVelocity.x : overallVelocity.y;
+  input.overallVelocity =
+    abs(overallVelocity.x) > abs(overallVelocity.y)
+      ? overallVelocity.x
+      : overallVelocity.y;
 
   input.scale = firstMultiple ? getScale(firstMultiple.pointers, pointers) : 1;
-  input.rotation = firstMultiple ? getRotation(firstMultiple.pointers, pointers) : 0;
+  input.rotation = firstMultiple
+    ? getRotation(firstMultiple.pointers, pointers)
+    : 0;
 
-  input.maxPointers = !session.prevInput ? input.pointers.length : ((input.pointers.length >
-  session.prevInput.maxPointers) ? input.pointers.length : session.prevInput.maxPointers);
+  input.maxPointers = !session.prevInput
+    ? input.pointers.length
+    : input.pointers.length > session.prevInput.maxPointers
+    ? input.pointers.length
+    : session.prevInput.maxPointers;
 
   computeIntervalInputData(session, input);
 

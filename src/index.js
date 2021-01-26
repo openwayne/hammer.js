@@ -30,10 +30,7 @@ import Manager from './manager';
 import Input from './inputjs/input-constructor';
 import TouchAction from './touchactionjs/touchaction-constructor';
 import TouchInput from './input/touch';
-import MouseInput from './input/mouse';
 import PointerEventInput from './input/pointerevent';
-import SingleTouchInput from './input/singletouch';
-import TouchMouseInput from './input/touchmouse';
 
 import Recognizer from './recognizerjs/recognizer-constructor';
 import AttrRecognizer from './recognizers/attribute';
@@ -89,10 +86,7 @@ export default assign(Hammer, {
   TouchAction,
 
   TouchInput,
-  MouseInput,
   PointerEventInput,
-  TouchMouseInput,
-  SingleTouchInput,
 
   Recognizer,
   AttrRecognizer,

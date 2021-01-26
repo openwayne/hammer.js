@@ -1,11 +1,3 @@
-const MOBILE_REGEX = /mobile|tablet|ip(ad|hone|od)|android/i;
-
-const SUPPORT_TOUCH = true;
-// TODO
-const SUPPORT_POINTER_EVENTS = false;
-const SUPPORT_ONLY_TOUCH =
-  SUPPORT_TOUCH && MOBILE_REGEX.test(navigator.userAgent);
-
 const INPUT_TYPE_TOUCH = 'touch';
 const INPUT_TYPE_PEN = 'pen';
 const INPUT_TYPE_MOUSE = 'mouse';
@@ -32,10 +24,6 @@ const PROPS_XY = ['x', 'y'];
 const PROPS_CLIENT_XY = ['clientX', 'clientY'];
 
 export {
-  MOBILE_REGEX,
-  SUPPORT_ONLY_TOUCH,
-  SUPPORT_POINTER_EVENTS,
-  SUPPORT_TOUCH,
   INPUT_TYPE_KINECT,
   INPUT_TYPE_MOUSE,
   INPUT_TYPE_PEN,

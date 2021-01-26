@@ -1,11 +1,11 @@
 import setTimeoutContext from '../utils/set-timeout-context';
 import Recognizer from '../recognizerjs/recognizer-constructor';
 import { TOUCH_ACTION_MANIPULATION } from '../touchactionjs/touchaction-Consts';
-import {INPUT_START,INPUT_END } from '../inputjs/input-consts';
+import { INPUT_START, INPUT_END } from '../inputjs/input-consts';
 import {
-    STATE_RECOGNIZED,
-    STATE_BEGAN,
-    STATE_FAILED
+  STATE_RECOGNIZED,
+  STATE_BEGAN,
+  STATE_FAILED,
 } from '../recognizerjs/recognizer-consts';
 import getDistance from '../inputjs/get-distance';
 
@@ -47,7 +47,7 @@ export default class TapRecognizer extends Recognizer {
 
     this.reset();
 
-    if ((input.eventType & INPUT_START) && (this.count === 0)) {
+    if (input.eventType & INPUT_START && this.count === 0) {
       return this.failTimeout();
     }
 
@@ -58,8 +58,12 @@ export default class TapRecognizer extends Recognizer {
         return this.failTimeout();
       }
 
-      let validInterval = this.pTime ? (input.timeStamp - this.pTime < options.interval) : true;
-      let validMultiTap = !this.pCenter || getDistance(this.pCenter, input.center) < options.posThreshold;
+      let validInterval = this.pTime
+        ? input.timeStamp - this.pTime < options.interval
+        : true;
+      let validMultiTap =
+        !this.pCenter ||
+        getDistance(this.pCenter, input.center) < options.posThreshold;
 
       this.pTime = input.timeStamp;
       this.pCenter = input.center;
@@ -81,10 +85,14 @@ export default class TapRecognizer extends Recognizer {
         if (!this.hasRequireFailures()) {
           return STATE_RECOGNIZED;
         } else {
-          this._timer = setTimeoutContext(() => {
-            this.state = STATE_RECOGNIZED;
-            this.tryEmit();
-          }, options.interval, this);
+          this._timer = setTimeoutContext(
+            () => {
+              this.state = STATE_RECOGNIZED;
+              this.tryEmit();
+            },
+            options.interval,
+            this,
+          );
           return STATE_BEGAN;
         }
       }
@@ -93,9 +101,13 @@ export default class TapRecognizer extends Recognizer {
   }
 
   failTimeout() {
-    this._timer = setTimeoutContext(() => {
-      this.state = STATE_FAILED;
-    }, this.options.interval, this);
+    this._timer = setTimeoutContext(
+      () => {
+        this.state = STATE_FAILED;
+      },
+      this.options.interval,
+      this,
+    );
     return STATE_FAILED;
   }
 
@@ -118,5 +130,5 @@ TapRecognizer.prototype.defaults = {
   interval: 300, // max time between the multi-tap taps
   time: 250, // max time of the pointer to be down (like finger on the screen)
   threshold: 9, // a minimal movement is ok, but keep it low
-  posThreshold: 10 // a multi-tap can be a bit off the initial position
+  posThreshold: 10, // a multi-tap can be a bit off the initial position
 };

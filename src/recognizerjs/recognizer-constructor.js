@@ -1,11 +1,11 @@
 import {
-    STATE_POSSIBLE,
-    STATE_ENDED,
-    STATE_FAILED,
-    STATE_RECOGNIZED,
-    STATE_CANCELLED,
-    STATE_BEGAN,
-    STATE_CHANGED
+  STATE_POSSIBLE,
+  STATE_ENDED,
+  STATE_FAILED,
+  STATE_RECOGNIZED,
+  STATE_CANCELLED,
+  STATE_BEGAN,
+  STATE_CHANGED,
 } from './recognizer-consts';
 import assign from '../utils/assign';
 import uniqueId from '../utils/unique-id';
@@ -197,7 +197,8 @@ export default class Recognizer {
 
     emit(self.options.event); // simple 'eventName' events
 
-    if (input.additionalEvent) { // additional event(panleft, panright, pinchin, pinchout...)
+    if (input.additionalEvent) {
+      // additional event(panleft, panright, pinchin, pinchout...)
       emit(input.additionalEvent);
     }
 
@@ -264,7 +265,10 @@ export default class Recognizer {
 
     // the recognizer has recognized a gesture
     // so trigger an event
-    if (this.state & (STATE_BEGAN | STATE_CHANGED | STATE_ENDED | STATE_CANCELLED)) {
+    if (
+      this.state &
+      (STATE_BEGAN | STATE_CHANGED | STATE_ENDED | STATE_CANCELLED)
+    ) {
       this.tryEmit(inputDataClone);
     }
   }
@@ -279,7 +283,7 @@ export default class Recognizer {
    */
 
   /* jshint ignore:start */
-  process(inputData) { }
+  process(inputData) {}
   /* jshint ignore:end */
 
   /**
@@ -288,7 +292,7 @@ export default class Recognizer {
    * @virtual
    * @returns {Array}
    */
-  getTouchAction() { }
+  getTouchAction() {}
 
   /**
    * @private
@@ -296,7 +300,7 @@ export default class Recognizer {
    * like when another is being recognized or it is disabled
    * @virtual
    */
-  reset() { }
+  reset() {}
 }
 
 Recognizer.prototype.defaults = {};

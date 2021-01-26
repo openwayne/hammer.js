@@ -1,15 +1,12 @@
 import Recognizer from '../recognizerjs/recognizer-constructor';
 import {
-    STATE_BEGAN,
-    STATE_CHANGED,
-    STATE_CANCELLED,
-    STATE_ENDED,
-    STATE_FAILED
+  STATE_BEGAN,
+  STATE_CHANGED,
+  STATE_CANCELLED,
+  STATE_ENDED,
+  STATE_FAILED,
 } from '../recognizerjs/recognizer-consts';
-import {
-    INPUT_CANCEL,
-    INPUT_END
-} from '../inputjs/input-consts';
+import { INPUT_CANCEL, INPUT_END } from '../inputjs/input-consts';
 
 /**
  * @private
@@ -69,5 +66,5 @@ AttrRecognizer.prototype.defaults = {
    * @type {Number}
    * @default 1
    */
-  pointers: 1
+  pointers: 1,
 };

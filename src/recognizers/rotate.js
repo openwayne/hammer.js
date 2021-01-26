@@ -19,13 +19,16 @@ export default class RotateRecognizer extends AttrRecognizer {
   }
 
   attrTest(input) {
-    return super.attrTest(input) &&
-        (Math.abs(input.rotation) > this.options.threshold || this.state & STATE_BEGAN);
+    return (
+      super.attrTest(input) &&
+      (Math.abs(input.rotation) > this.options.threshold ||
+        this.state & STATE_BEGAN)
+    );
   }
 }
 
 RotateRecognizer.prototype.defaults = {
   event: 'rotate',
   threshold: 0,
-  pointers: 2
+  pointers: 2,
 };

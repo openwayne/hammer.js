@@ -8,8 +8,12 @@ import extend from './extend';
  * @param {Object} src
  * @returns {Object} dest
  */
-const merge = deprecate((dest, src) => {
-  return extend(dest, src, true);
-}, 'merge', 'Use `assign`.');
+const merge = deprecate(
+  (dest, src) => {
+    return extend(dest, src, true);
+  },
+  'merge',
+  'Use `assign`.',
+);
 
 export default merge;

@@ -8,16 +8,20 @@ import deprecate from './deprecate';
  * @param {Boolean} [merge=false]
  * @returns {Object} dest
  */
-const extend = deprecate((dest, src, merge) => {
-  let keys = Object.keys(src);
-  let i = 0;
-  while (i < keys.length) {
-    if (!merge || (merge && dest[keys[i]] === undefined)) {
-      dest[keys[i]] = src[keys[i]];
+const extend = deprecate(
+  (dest, src, merge) => {
+    let keys = Object.keys(src);
+    let i = 0;
+    while (i < keys.length) {
+      if (!merge || (merge && dest[keys[i]] === undefined)) {
+        dest[keys[i]] = src[keys[i]];
+      }
+      i++;
     }
-    i++;
-  }
-  return dest;
-}, 'extend', 'Use `assign`.');
+    return dest;
+  },
+  'extend',
+  'Use `assign`.',
+);
 
 export default extend;

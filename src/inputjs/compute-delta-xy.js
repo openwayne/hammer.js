@@ -11,12 +11,12 @@ export default function computeDeltaXY(session, input) {
   if (input.eventType === INPUT_START || prevInput.eventType === INPUT_END) {
     prevDelta = session.prevDelta = {
       x: prevInput.deltaX || 0,
-      y: prevInput.deltaY || 0
+      y: prevInput.deltaY || 0,
     };
 
     offset = session.offsetDelta = {
       x: center.x,
-      y: center.y
+      y: center.y,
     };
   }
 

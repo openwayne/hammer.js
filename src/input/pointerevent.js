@@ -38,7 +38,7 @@ let POINTER_WINDOW_EVENTS = 'pointermove pointerup pointercancel';
  */
 export default class PointerEventInput extends Input {
   constructor() {
-    MouseInput.prototype.events = `${POINTER_ELEMENT_EVENTS} ${POINTER_WINDOW_EVENTS}`;
+    PointerEventInput.prototype.events = `${POINTER_ELEMENT_EVENTS} ${POINTER_WINDOW_EVENTS}`;
     super(...arguments);
     this.evEl = POINTER_ELEMENT_EVENTS;
     this.evWin = POINTER_WINDOW_EVENTS;

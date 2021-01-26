@@ -15,5 +15,5 @@ export default function getDistance(p1, p2, props) {
   let x = p2[props[0]] - p1[props[0]];
   let y = p2[props[1]] - p1[props[1]];
 
-  return Math.sqrt((x * x) + (y * y));
+  return Math.sqrt(x * x + y * y);
 }

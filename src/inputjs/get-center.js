@@ -13,7 +13,7 @@ export default function getCenter(pointers) {
   if (pointersLength === 1) {
     return {
       x: round(pointers[0].clientX),
-      y: round(pointers[0].clientY)
+      y: round(pointers[0].clientY),
     };
   }
 
@@ -28,6 +28,6 @@ export default function getCenter(pointers) {
 
   return {
     x: round(x / pointersLength),
-    y: round(y / pointersLength)
+    y: round(y / pointersLength),
   };
 }
