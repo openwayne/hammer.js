@@ -44,8 +44,8 @@ export default class TouchInput extends Input {
     }
 
     this.callback(this.manager, type, {
-      pointers: ev.touches,
-      changedPointers: [ev],
+      pointers: touches[0],
+      changedPointers: touches[1],
       pointerType: INPUT_TYPE_TOUCH,
       srcEvent: ev,
     });
