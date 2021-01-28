@@ -10,7 +10,7 @@ import TouchInput from '../input/touch';
  */
 export default function createInputInstance(manager) {
   let Type = TouchInput;
-  if (inputClass) {
+  if (manager.options.inputClass) {
     Type = inputClass;
   }
   return new Type(manager, inputHandler);
